@@ -3,6 +3,7 @@ const exhbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const dotenv =require('dotenv').config()
 const shortenURL = require('./shortenURL.js')
+const URLlist = require('./models/url_list.js')
 const app = express()
 const port = 3000
 
