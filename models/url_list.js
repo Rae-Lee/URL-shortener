@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
-const schema = mongoose.Schema
-const urlListSchema = new schema({
+const Schema = mongoose.Schema
+const urlListSchema = new Schema({
   inputURL: {
-    type: STRING,
+    type: String,
     required: true
   },
   outputURL: {
-    type: STRING,
+    type: String,
     required: true
   }
 })
-module.exports = mongoose.model(('URLlist', urlListSchema))
+module.exports = mongoose.model('URLlist', urlListSchema)

@@ -10,5 +10,4 @@ function shortenURL(){
   }
   return outputURL
 }
-console.log(shortenURL())
 module.exports = shortenURL

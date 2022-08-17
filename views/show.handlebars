@@ -4,6 +4,11 @@
     <div class="mb-3">
       <input type="text" class="form-control form-control-lg" id="url" name="url" placeholder="Input URL here"
         aria-describedby="input url">
+      {{#if isError}}
+      <div id="urlHelp" class="form-text text-danger">
+        {{formText}}
+      </div>
+      {{/if}}
     </div>
     <button class="btn btn-outline-primary px-5" type="submit">Shorten</button>
   </form>
