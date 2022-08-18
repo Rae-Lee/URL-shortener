@@ -32,14 +32,14 @@ app.post('/', (req, res) => {
   if(!checkURL(inputURL)){
     return res.render('show', { isError: true, formText: 'Please enter valid URL!' })
   }
-  //輸入結果已重複輸入
-  return URLlist.findOne({inputURL: inputURL})
+  //若輸入結果已重複，則回覆對應的短網址
+  return URLlist.findOne({ inputURL: inputURL })
     .lean()
-    .then(urllist => {
-      if(urllist !== null){
-        return res.render('show', { outputURL: urllist.outputURL })
+    .then(urlList => {
+      if(urlList !== null){
+        return res.render('show', { outputURL: urlList.outputURL })
       }
-       //若都沒有重複輸入，則新增至資料庫
+       //若都沒有重複輸入，則新增短網址至資料庫
       const outputURL = shortenURL()
       return URLlist.create({ inputURL: inputURL, outputURL: outputURL })
         .then(() => {
@@ -48,5 +48,13 @@ app.post('/', (req, res) => {
     })
     .catch(error => console.log(error))
 })
-
+app.get('/:randomWords', (req, res) => {
+  const randomWords = req.params.randomWords
+  return URLlist.findOne({ outputURL: `http://localhost:3000/${randomWords}` })
+    .lean()
+    .then(urlList =>{
+      res.redirect(urlList.inputURL)
+    })
+    .catch(error => console.log(error))
+})
 app.listen(port, () => console.log(`It is listening on http://localhost:${port}`))
