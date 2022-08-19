@@ -1,5 +1,5 @@
 <div class="mt-5 " >
-  {{#unless outputURL}}
+  {{#unless shortURL}}
   <form method="post" action="/">
     <div class="mb-3">
       <input type="text" class="form-control form-control-lg" id="url" name="url" placeholder="Input URL here"
@@ -13,10 +13,10 @@
     <button class="btn btn-outline-primary px-5" type="submit">Shorten</button>
   </form>
   {{/unless}}
-  {{#if outputURL}}
+  {{#if shortURL}}
   <h2>Success!Please use this link:</h2>
   <div class="mb-3">
-    <a href="{{ outputURL }}" class="outputURL">{{ outputURL }}</a>
+    <a href={{ shortURL }} class="outputURL">{{ shortURL }}</a>
   </div>
   <button class="btn btn-primary px-5 copy" type="submit"> Copy</button>
   {{/if}}

@@ -1,5 +1,5 @@
 function shortenURL(){
-  let outputURL = 'http://localhost:3000/'//宣告最終產生的網址
+  let outputURL //宣告最終產生的網址
   const upperLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   const data = upperLetters + upperLetters.toLowerCase() + '1234567890'
   const options = data.split('')//選項裡包括大寫字母、小寫字母和數字

@@ -23,34 +23,34 @@ app.get('/', (req, res) => {
   return res.render('show')
 })
 app.post('/', (req, res) => {
-  const inputURL = req.body.url
+  const enterURL = req.body.url
   //輸入結果是空白
-  if (inputURL.length === 0){
+  if (enterURL.length === 0){
     return res.render('show', { isError: true, formText: 'Please enter URL!' })
   }
   //輸入的URL格式不正確
-  if(!checkURL(inputURL)){
+  if(!checkURL(enterURL)){
     return res.render('show', { isError: true, formText: 'Please enter valid URL!' })
   }
   //輸入的URL無法成功連線
-  return checkURLExist(inputURL)
+  return checkURLExist(enterURL)
     .then(result => {
       if(!result){
         return res.render('show', { isError: true, formText: 'URL do not exist!' })
       }else{
         //輸入的URL成功連線
           //若先前已輸入過，則回覆對應的短網址
-        return URLlist.findOne({ inputURL: inputURL })
+        return URLlist.findOne({ inputURL: enterURL })
           .lean()
           .then(urlList => {
             if (urlList !== null) {
-              return res.render('show', { outputURL: urlList.outputURL })
+              return res.render('show', { shortURL: urlList.outputURL })
             }
             //若都沒有重複輸入，則新增短網址至資料庫
-            const outputURL = shortenURL()
-            return URLlist.create({ inputURL: inputURL, outputURL: outputURL })
+            const shortURL = req.protocol + '://' + req.hostname + ':' + port + '/'+ shortenURL()
+            return URLlist.create({ inputURL: enterURL, outputURL: shortURL })
               .then(() => {
-                return res.render('show', { outputURL })
+                return res.render('show', { shortURL })
               })
           })
       }
@@ -59,8 +59,8 @@ app.post('/', (req, res) => {
 })
 app.get('/:randomWords', (req, res) => {
   const randomWords = req.params.randomWords
-  return URLlist.findOne({ outputURL: `http://localhost:3000/${randomWords}` })
-    .lean()
+  const url = req.protocol + '://' + req.hostname + ':' + port + '/' + randomWords
+  return URLlist.findOne({ outputURL: url })
     .then(urlList =>{
       res.redirect(urlList.inputURL)
     })
